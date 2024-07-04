@@ -132,123 +132,191 @@ const developers = [
 ]
 
 //Array with just the names of all the developers
-const developerNames = developers.map(function(developer){
-  return developer.name;
-});
+function getDevNames(developers) {
+  return developers.map(function(developer){
+    return developer.name;
+  });
+}
+const developerNames = getDevNames(developers);
 console.log(developerNames);
 
 //Total number of phones all developers have
-const totalPhones = developers.reduce(function(holder, developer){
-  return holder + developer.phones.length;
-
-}, 0); 
+function getNumberOfPhones(developers){
+  return developers.reduce(function(holder, developer) {
+    return holder + developer.phones.length;
+  }, 0);
+}
+const totalPhones = getNumberOfPhones(developers);
 console.log("Total phones:", totalPhones);
 
 //Number of incomplete setups
-const incompleteSetups = developers.filter(function(developer){
-  return developer.computerSetups.some(function(setup){
-    return setup.monitors === 0 || setup.keyboards === 0 || setup.mice === 0 || setup.speakers === 0;
-  })
-}).length;
+function getSetUp(developers){
+  return developers.filter(function(developer){
+    return developer.computerSetups.some(function(setup){
+      return setup.monitors === 0 || setup.keyboards === 0 || setup.mice === 0 || setup.speakers === 0;
+    })
+  }).length;
+}
+const incompleteSetups = getSetUp(developers)
 console.log("Number of incomplete setups:", incompleteSetups);
 
 //Most trusted phone brand
- const AllPhones = developers.flatMap(function(developer){
-  return developer.phones;
- });
- const countBrandPhones = AllPhones.reduce(function(holder, phone){
+// Define a function to find the most trusted phone brand
+function getMostTrustedPhoneBrand(developers) {
+  // Flatten all phones into a single array
+  const allPhones = developers.flatMap(function(developer) {
+    return developer.phones;
+  });
 
-  function countPhone(holder, phone) {
+
+
+  // Count occurrences of each phone brand
+  const countBrandPhones = allPhones.reduce(function(holder, phone) {
     holder[phone] = (holder[phone] || 0) + 1;
-  }
-  
-  countPhone(holder, phone);
-  return holder;
-}, {});
-const mostTrustedPhoneBrand = Object.keys(countBrandPhones).reduce(function(a, b){
-  return  countBrandPhones[a] > countBrandPhones[b] ? a : b;
-}
-);
+    return holder;
+  }, {});
 
-// Print out the most trusted phone brand
+
+
+  // Find the brand with the highest count
+  const mostTrustedPhoneBrand = Object.keys(countBrandPhones).reduce(function(a, b) {
+    return countBrandPhones[a] > countBrandPhones[b] ? a : b;
+  });
+
+  return mostTrustedPhoneBrand;
+
+}
+
+
+// Call the function to get the most trusted phone brand
+const mostTrustedPhoneBrand = getMostTrustedPhoneBrand(developers);
 console.log("Most trusted phone brand:", mostTrustedPhoneBrand);
 
-//
+// Check what phone brand is least trusted
+function getLeastTrustedPhoneBrand(developers) {
+  
+  const allPhones = developers.flatMap(function(developer) {
+    return developer.phones;
+  });
+
+  // Count occurrences of each phone brand
+  const countBrandPhones = allPhones.reduce(function(holder, phone) {
+    holder[phone] = (holder[phone] || 0) + 1;
+    return holder;
+  }, {});
+
+  const leastTrustedPhoneBrand = Object.keys(countBrandPhones).reduce(function(a, b) {
+    return countBrandPhones[a] < countBrandPhones[b]? a : b;
+  });
+  return leastTrustedPhoneBrand;
+}
+const leastTrustedPhoneBrand = getLeastTrustedPhoneBrand(developers)
+console.log("Least trusted phone brand:", leastTrustedPhoneBrand);
+
 
 //Number of people who do not have a phone
-const noPhoneCount = developers.filter(function(developer){
-  return developer.phones.length === 0;
-}).length;
+function getDevWithNoPhones(developers) {
+  return developers.filter(function(developer){
+    return developer.phones.length === 0;
+  }).length;
+}
+const noPhoneCount = getDevWithNoPhones(developers);
 console.log("Number of people without a phone:", noPhoneCount);
 
 
 // Number of people who do not have a laptop
-const noLaptopCount = developers.filter(function(developer){
-  return developer.laptops.length === 0;
-}).length;
+function getDevWithNoLaptops(developers){
+  return developers.filter(function(developer){
+    return developer.laptops.length === 0;
+  }).length;
+}
+const noLaptopCount = getDevWithNoLaptops(developers);
 console.log("Number of people without a laptop:", noLaptopCount);
 
 
 //Number of people who do not have a computer setup (desktop)
-const noComputerSetupCount = developers.filter(function(developer){
-  return developer.computerSetups.length === 0;
-}).length;
+function getDevWithNoComputerSetups(developers){
+  return developers.filter(function(developer){
+    return developer.computerSetups.length === 0;
+  }).length;
+}
+const noComputerSetupCount = getDevWithNoComputerSetups(developers);
 
 console.log("Number of people without a computer setup:", noComputerSetupCount);
 
 //Developer with the most total gadgets
-const gadgetsCounts = developers.map(function(developer){
-  return {
-    name: developer.name,
-    totalGadgets: developer.laptops.length + developer.phones.length + developer.computerSetups.length
-  }
-});
+function getDevWithNoGadgets(developers){
+  const gadgetsCounts = developers.map(function(developer) {
+    return {
+      name: developer.name,
+      totalGadgets: developer.laptops.length + developer.phones.length + developer.computerSetups.length
+    };
+  });
 
-//Check which developer has the most total gadgets. In your answer provide the name as well as all the gadgets they have.
-const mostGadgetsDeveloper = gadgetsCounts.reduce(function(a, b){
-  return a.totalGadgets > b.totalGadgets? a : b;
-});
+  // Find developer with the most gadgets using reduce
+  const mostGadgetsDeveloper = gadgetsCounts.reduce(function(a, b) {
+    return a.totalGadgets > b.totalGadgets ? a : b;
+  });
+
+  return mostGadgetsDeveloper;
+}
+
+const mostGadgetsDeveloper = getDevWithNoGadgets(developers);
 console.log("Developer with the most gadgets:", mostGadgetsDeveloper.name, "with", mostGadgetsDeveloper.totalGadgets, "gadgets");
 
 
 //Developer with the most phones
-const phonesCounts = developers.map(function(developer){
-  return {
-    name: developer.name,
-    phoneCount: developer.phones.length
-  }
-});
+function getmostPhones(developers) {
+  const phonesCounts = developers.map(function(developer){
+    return {
+      name: developer.name,
+      phoneCount: developer.phones.length
+    }
+  });
+  const mostPhonesDeveloper = phonesCounts.reduce(function(a, b){
+    return a.phoneCount > b.phoneCount? a : b;
+  });
+  return mostPhonesDeveloper;
+}
 
-const mostPhonesDeveloper = phonesCounts.reduce(function(a, b){
-  return a.phoneCount > b.phoneCount? a : b;
-});
+
+const mostPhonesDeveloper = getmostPhones(developers);
 console.log("Developer with the most phones:", mostPhonesDeveloper.name, "with", mostPhonesDeveloper.phoneCount, "phones");
 
 
 //Developer with the most computer setups
-const setupsCounts = developers.map(function(developer){
-  return {
-    name: developer.name,
-    setupsCount: developer.computerSetups.length
-  }
-});
+function getMostSetups(developers){
+  const setupsCounts = developers.map(function(developer){
+    return {
+      name: developer.name,
+      setupsCount: developer.computerSetups.length
+    }
+  });
 
-const mostSetupsDeveloper = setupsCounts.reduce(function(a, b){
-  return (a.setupsCount > b.setupsCount) ? a : b;
-});
+  const mostSetupsDeveloper = setupsCounts.reduce(function(a, b){
+    return (a.setupsCount > b.setupsCount) ? a : b;
+  });
+  return mostSetupsDeveloper;
+}
+const mostSetupsDeveloper = getMostSetups(developers);
 console.log("Developer with the most computer setups:", mostSetupsDeveloper.name, "with", mostSetupsDeveloper.setupsCount, "setups");
 
 //Developer with the most monitors (combining all setups)
-const monitorCounts = developers.map(function(developer){
-  return {
-    name: developer.name,
-    totalMonitors: developer.computerSetups.reduce(function(acc, setup){
-      return acc + setup.monitors;
-    }, 0)
-  }
-});
+function getMostMonitors(developers){
+  const monitorCounts = developers.map(function(developer){
+    return {
+      name: developer.name,
+      totalMonitors: developer.computerSetups.reduce(function(holder, setup){
+        return holder + setup.monitors;
+      }, 0)
+    }
+  });
 
-const mostMonitorsDeveloper = monitorCounts.reduce(function(a, b) {
-  return (a.totalMonitors > b.totalMonitors) ? a : b;
-});
+  const mostMonitorsDeveloper = monitorCounts.reduce(function(a, b) {
+    return (a.totalMonitors > b.totalMonitors) ? a : b;
+  });
+  return mostMonitorsDeveloper;
+}
+const mostMonitorsDeveloper = getMostMonitors(developers)
+
 console.log("Developer with the most monitors:", mostMonitorsDeveloper.name, "with", mostMonitorsDeveloper.totalMonitors, "monitors");
