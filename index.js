@@ -1,111 +1,107 @@
-let numbers = [3, 56, 23, 78, 23, 78, 100, 123, 148, 193, 190, -190, 210, 34, 67, 3, 78, 210, 34, 34, 50, 59, 89, 87, 230, 210, 100, 23, 980];
+const numbers = [3, 56, 23, 78, 23, 78, 100, 123, 148, 193, 190, -190, 210, 34, 67, 3, 78, 210, 34, 34, 50, 59, 89, 87, 230, 210, 100, 23, 980];
 
-// Sort the numbers from lowest to highest
-let sortedNumbersAsc = numbers.sort(function(a, b){
-    return a - b;
-});
-console.log(sortedNumbersAsc);
-
-// Sort the numbers from highest to lowest
-let sortedNumbersDesc = numbers.sort(function(a, b){
-    return b - a;
-});
-console.log(sortedNumbersDesc);
-
-// Return an array of unique numbers
-let uniqueNumbers = [...new Set(numbers)];
-console.log(uniqueNumbers);
-
-// Calculate the sum of the numbers
-let sumOfNumbers = numbers.reduce(function(holder, num){
-    return holder + num
-    },0);
-console.log(sumOfNumbers);
-
-// Return a new array with elements that are less than or equal to 100
-let lessThanOrEqual100 = numbers.filter(function(num) {
-    return num <= 100;
-});
-console.log(lessThanOrEqual100); 
-
-// Return a new array with elements that are greater than 50
-let greaterThan50 = numbers.filter(function(num){
-    return num > 50;
-});
-console.log(greaterThan50);
-
-// Return a new array with elements that are divisible by 2
-let divisibleBy2 = numbers.filter(function(num){
-    return num % 2 === 0;
-});
-console.log(divisibleBy2);
-
-// Return a new array with elements that are divisible by 3
-let divisibleBy3 = numbers.filter(function(num){
-    return num % 3 === 0;
-});
-console.log(divisibleBy3);
-
-// Return a new array with elements that are neither divisible by 2 or 3, if they exist. Otherwise return an empty array.
-let neitherDivisible = numbers.filter(function(num) {
-    return num % 2 !== 0 && num % 3 !== 0;
-});
-
-
-// Declare a variable that counts how many elements are in the original array
-let countElements = numbers.length;
-console.log(countElements);
-
-// Declare a new array that contains the same elements as the original array, but reversed.
-let reversedArray = numbers.slice().reverse();
-console.log(reversedArray);
-
-// Given another array
-let otherArray = [7, 10, "Clentan", 13, 89, true, 45, false, "Jerry", "Vukona", "Reabetswe", 600];
-
-// Using a for loop and a variable, return all values that are numbers
-let numbersOnly = [];
-for (let item of otherArray) {
-    if (typeof item === 'number' && !isNaN(item)) {
-        numbersOnly.push(item);
-    }
-}
-console.log(numbersOnly);
-
-// // Using a while loop and a variable, return all values that are strings
-let stringsOnly = [];
-let index = 0;
-while (index < otherArray.length) {
-    if (typeof otherArray[index] === 'string') {
-        stringsOnly.push(otherArray[index]);
-    }
-    index++;
-}
-console.log(stringsOnly);
-
-// Using a do while loop, return the sum of all values in the array
-let totalSum = 0;
-let i = 0;
-do {
-    if (typeof otherArray[i] === 'number' && !isNaN(otherArray[i])) {
-        totalSum += otherArray[i];
-    }
-    i++;
-} while (i < otherArray.length);
-console.log(totalSum);
-
-// Using any looping structure of your choice and a variable, combine all the strings to form a proper greeting
-let greeting = "Hello ";
-for (let item of otherArray) {
-    if (typeof item === 'string') {
-        greeting += item + ", ";
-    }
-}
-greeting = greeting.slice(0, -2) + ".";
-console.log(greeting);
-
-// // Using any looping structure of your choice and a new variable, remove all values in the array that are strings
-let nonStrings = otherArray.filter(function(item){
-    return (typeof item  !=='string');
-});
-console.log(nonStrings);
+// Function to sort numbers from lowest to highest
+function sortNumbersAsc(arr) {
+    return arr.slice().sort(function(a, b) {
+      return a - b;
+    });
+  }
+  
+  // Function to sort numbers from highest to lowest
+  function sortNumbersDesc(arr) {
+    return arr.slice().sort(function(a, b) {
+      return b - a;
+    });
+  }
+  
+  // Function to return an array of unique numbers
+  function getUniqueNumbers(arr) {
+    return [...new Set(arr)];
+  }
+  
+  // Function to calculate the sum of numbers
+  function sumOfNumbers(arr) {
+    return arr.reduce(function(holder, num) {
+      return holder + num;
+    }, 0);
+  }
+  
+  // Function to return a new array with elements <= 100
+  function filterLessThanOrEqual100(arr) {
+    return arr.filter(function(num) {
+      return num <= 100;
+    });
+  }
+  
+  // Function to return a new array with elements > 50
+  function filterGreaterThan50(arr) {
+    return arr.filter(function(num) {
+      return num > 50;
+    });
+  }
+  
+  // Function to return a new array with elements divisible by 2
+  function filterDivisibleBy2(arr) {
+    return arr.filter(function(num) {
+      return num % 2 === 0;
+    });
+  }
+  
+  // Function to return a new array with elements divisible by 3
+  function filterDivisibleBy3(arr) {
+    return arr.filter(function(num) {
+      return num % 3 === 0;
+    });
+  }
+  
+  // Function to return a new array with elements neither divisible by 2 nor 3
+  function filterNeitherDivisibleBy2or3(arr) {
+    return arr.filter(function(num) {
+      return num % 2 !== 0 && num % 3 !== 0;
+    });
+  }
+  
+  // Function to count elements in the original array
+  function countElements(arr) {
+    return arr.length;
+  }
+  
+  // Function to create a reversed array
+  function reverseArray(arr) {
+    return arr.slice().reverse();
+  }
+  
+  // Example usage of the functions with numbers as parameter
+  let sortedNumbersAsc = sortNumbersAsc(numbers);
+  console.log("Sorted numbers (asc):", sortedNumbersAsc);
+  
+  let sortedNumbersDesc = sortNumbersDesc(numbers);
+  console.log("Sorted numbers (desc):", sortedNumbersDesc);
+  
+  let uniqueNumbers = getUniqueNumbers(numbers);
+  console.log("Unique numbers:", uniqueNumbers);
+  
+  let sum = sumOfNumbers(numbers);
+  console.log("Sum of numbers:", sum);
+  
+  let lessThanOrEqual100 = filterLessThanOrEqual100(numbers);
+  console.log("Numbers less than or equal to 100:", lessThanOrEqual100);
+  
+  let greaterThan50 = filterGreaterThan50(numbers);
+  console.log("Numbers greater than 50:", greaterThan50);
+  
+  let divisibleBy2 = filterDivisibleBy2(numbers);
+  console.log("Numbers divisible by 2:", divisibleBy2);
+  
+  let divisibleBy3 = filterDivisibleBy3(numbers);
+  console.log("Numbers divisible by 3:", divisibleBy3);
+  
+  let neitherDivisible = filterNeitherDivisibleBy2or3(numbers);
+  console.log("Numbers neither divisible by 2 nor 3:", neitherDivisible);
+  
+  let count = countElements(numbers);
+  console.log("Number of elements in the array:", count);
+  
+  let reversed = reverseArray(numbers);
+  console.log("Reversed array:", reversed);
+  
